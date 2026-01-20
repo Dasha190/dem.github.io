@@ -1,155 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Christmas Crossword</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ключи и Дата</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #e6f4ea;
-      text-align: center;
       padding: 20px;
+      background: #f4f4f4;
     }
-    h1 {
-      color: #c62828;
-    }
-    .grid {
-      display: inline-grid;
-      grid-template-columns: repeat(8, 40px);
-      grid-template-rows: repeat(8, 40px);
-      gap: 1px;
-      margin: 20px auto;
-      background: #333;
-      padding: 2px;
-      border-radius: 4px;
-    }
-    .cell {
-      width: 40px;
-      height: 40px;
+    .container {
+      max-width: 600px;
+      margin: auto;
       background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      font-weight: bold;
-      font-size: 18px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .black {
-      background: #333;
-    }
-    .number {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      font-size: 10px;
-      color: #000;
-    }
-    .clues {
-      max-width: 500px;
-      margin: 20px auto;
-      text-align: left;
-    }
-    .clues h2 {
-      color: #1565c0;
-      margin-top: 20px;
-    }
-    .clue {
-      margin: 6px 0;
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
     }
   </style>
 </head>
 <body>
-  <h1>🎄 Christmas Crossword 🎄</h1>
+  <div class="container">
+    <h1>🔐 Информация о ключах</h1>
+    <p><strong>Сегодня:</strong> <span id="current-date"></span></p>
 
-  <div class="grid" id="crossword"></div>
+    <h2>Открытый ключ (публичный)</h2>
+    <pre id="public-key">-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
+-----END PUBLIC KEY-----</pre>
 
-  <div class="clues">
-    <h2>Across:</h2>
-    <div class="clue">1. Jolly man in red who delivers presents (5)</div>
-    <div class="clue">4. White figure built in winter (7)</div>
-    <div class="clue">6. Something you open on Christmas morning (4)</div>
+    <h2>Закрытый ключ (приватный) — ТОЛЬКО В УЧЕБНЫХ ЦЕЛЯХ!</h2>
+    <pre id="private-key">-----BEGIN PRIVATE KEY-----
+MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC...
+-----END PRIVATE KEY-----</pre>
 
-    <h2>Down:</h2>
-    <div class="clue">1. Animal that pulls Santa's sleigh (8)</div>
-    <div class="clue">2. Evergreen plant decorated with lights (4)</div>
+    <p style="color: red; font-weight: bold;">
+      ⚠️ Настоящие закрытые ключи НИКОГДА не должны быть в открытом доступе!
+    </p>
   </div>
 
-  <script>
-    // 8x8 grid layout (letters or '.' for black cells)
-    const layout = [
-      ['S','A','N','T','A','.','.','.'], // 1. Santa (Across)
-      ['R','.','.','.','W','.','.','.'], // R of Reindeer (Down)
-      ['E','.','.','.','O','.','.','.'], // E
-      ['I','4','N','E','M','.','.','.'], // I + 4. Snowman starts here
-      ['N','N','.','.','A','.','.','.'], // N
-      ['D','E','E','R','N','.','6','G'], // Reindeer completed + G of Gift
-      ['E','.','.','.','.','.','I','I'], // I
-      ['E','.','.','.','.','.','.','F']  // F
-    ];
-
-    const numbers = {
-      '0,0': '1', // Santa
-      '1,0': '1', // Reindeer (Down) — same start as Santa's S, but vertical
-      '0,1': '2', // Tree (Down) — starts at (0,1): A → but actually Tree starts at (0,1)? Let's fix logic.
-
-      // Correction: Let's define properly:
-      // Down 1: Reindeer — starts at (0,0)
-      // Down 2: Tree — starts at (0,1) → T, but we have 'A' there. So adjust!
-    };
-
-    // Better layout with proper intersections:
-    // Let's rebuild grid logically:
-
-    /*
-      Goal:
-        Across:
-          1. SANTA  → row 0, col 0-4
-          4. SNOWMAN → row 3, col 1-7
-          6. GIFT → row 5, col 6-9 (but grid 8x8 → col 6-9 = 6,7,8,9 → too big)
-
-      Revised plan: Use smaller words smartly.
-
-      Final chosen layout (8x8):
-
-        S A N T A . . .
-        R . . . R . . .
-        E . . . E . . .
-        I . S N O W M A
-        N . . . . . . N
-        D . . . . . G I
-        E . . . . . . F
-        E R . . . . . T
-
-      But Tree = T-R-E-E → vertical at col 7: A-N-I-F-T → no.
-
-      Simpler and cleaner approach:
-    */
-
-    // NEW: Clean 7x7 grid
-
-    const finalLayout = [
-      ['1','A','2','N','T','A','.'], // S(1) at [0,0], T(2) at [0,2]
-      ['R','.','.','.','.','.','.'],
-      ['E','.','S','N','O','W','M'],
-      ['I','.','.','.','.','.','A'],
-      ['N','.','.','.','.','.','N'],
-      ['D','3','G','I','F','T','.'],
-      ['E','R','.','.','.','.','.']
-    ];
-
-    // Across:
-    // 1. SANTA (0,0 → 0,4)
-    // 3. GIFT (5,2 → 5,5)
-    // Plus SNOWMAN starts at (2,2)
-
-    // Down:
-    // 1. REINDEER (0,0 → 6,0)
-    // 2. TREE (0,2 → 3,2) → but [0,2]=T, [1,2]=? → must be R
-
-    // Let's fix: Use this proven layout:
-
-    const grid = [
-      ['S','A','N','T','A','.','.'],
-      ['R','.','.','.','.','.','.'],
-      ['E','.','S','N','O','W','M'],
+  <script src="script.js"></script>
+</body>
+</html>
