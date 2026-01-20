@@ -448,7 +448,16 @@ https://github.com/M144tt40/M144tt40github.io
     }
 
     /* Если шрифт не загрузится — будет использоваться резервный (cursive) */
-  </style>
+  </style><style>
+  @font-face {
+    font-family: 'Pudelinka';
+    src: url('/assets/fonts/PudelinkaFont.ttf') format('truetype');
+    font-display: swap;
+  }
+  .post-content, .post-content p, .post-content h1, .post-content h2 {
+    font-family: 'Pudelinka', cursive, sans-serif !important;
+  }
+</style>
 </head>
 <body>
   <h1>Добро пожаловать на Пуделинку!</h1>
