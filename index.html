@@ -277,3 +277,99 @@ https://github.com/M144tt40/M144tt40github.io
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>❄️ С Новым Годом! ❄️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #a8d8ea, #7fb3c4); /* Голубой градиент */
+      color: #003366;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .content {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 51, 102, 0.2);
+      max-width: 90%;
+      z-index: 10;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      color: #005f8d;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .emoji {
+      font-size: 2.5rem;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="emoji">❄️✨💙</div>
+    <h1>Добро пожаловать!</h1>
+    <p>Пусть твой код будет чистым,<br>а баги — редкими, как белые ночи!</p>
+  </div>
+
+  <!-- Скрипт анимации снежинок -->
+  <script>
+    const snowflakesCount = 120;
+    const container = document.body;
+
+    for (let i = 0; i < snowflakesCount; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.innerHTML = '❄';
+      snowflake.style.position = 'absolute';
+      snowflake.style.top = '-30px';
+      snowflake.style.fontSize = Math.random() * 24 + 10 + 'px';
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.opacity = Math.random() * 0.7 + 0.2;
+      snowflake.style.color = '#e0f7ff'; /* Очень светло-голубой / почти белый */
+      snowflake.style.pointerEvents = 'none';
+      snowflake.style.zIndex = '1';
+      snowflake.style.textShadow = '0 0 8px rgba(255, 255, 255, 0.8)';
+
+      container.appendChild(snowflake);
+
+      // Анимация
+      animateSnowflake(snowflake);
+    }
+
+    function animateSnowflake(el) {
+      const duration = Math.random() * 8 + 6; // 6–14 сек
+      const delay = Math.random() * 5;
+      const swing = (Math.random() - 0.5) * 200; // Колебание влево/вправо
+
+      el.animate([
+        { transform: `translateX(0px) translateY(-10vh)`, opacity: el.style.opacity },
+        { transform: `translateX(${swing}px) translateY(110vh)`, opacity: el.style.opacity * 0.4 }
+      ], {
+        duration: duration * 1000,
+        delay: delay * 1000,
+        iterations: Infinity,
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+      });
+    }
+  </script>
+</body>
+</html>
