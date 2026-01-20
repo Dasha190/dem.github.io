@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Новогодний кроссворд — Решай онлайн!</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #0a3d15, #1d5b2a);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #ffd700;
+      text-shadow: 0 0 10px rgba(255,215,0,0.7);
+      margin-bottom: 20px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .crossword {
+      background-color: #0f2a0f;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(15, 30px);
+      grid-template-rows: repeat(15, 30px);
+      gap: 1px;
+      margin: 0 auto;
+    }
+    .cell {
+      width: 30px;
+      height: 30px;
+      background: #1a471a;
+      border: 1px solid #4caf50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      position: relative;
+      color: white;
+      font-size: 16px;
+    }
+    .cell.black {
+      background: #000;
+    }
+    .cell input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+    .cell input:focus {
+      outline: 2px solid #ffd700;
+    }
+    .cell .number {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 10px;
+      color: #ffd700;
+    }
+    .clues {
+      background-color: #0f2a0f;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      max-width: 350px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+    .clues h2 {
+      color: #ffd700;
+      margin-top: 0;
+    }
+    .clue {
+      margin: 8px 0;
+    }
+    .clue-number {
+      display: inline-block;
+      width: 20px;
+      font-weight: bold;
+      color: #ffd700;
+    }
+    .controls {
+      margin-top: 20px;
+    }
+    button {
+      background: #ffd700;
+      color: #0a3d15;
+      border: none;
+      padding: 8px 16px;
+      margin: 0 8px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ffcc00;
+    }
+    .cell.incorrect {
+      background: #5a0000;
+    }
+    .cell.correct {
+      background: #1a471a;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎄 Новогодний кроссворд — Решай онлайн! 🎄</h1>
+  <div class="container">
+    <div class="crossword">
+      <div class="grid" id="crosswordGrid"></div>
+    </div>
+    <div class="clues">
+      <h2>По горизонтали:</h2>
+      <div class="clue"><span class="clue-number">1.</span> Главный новогодний персонаж с посохом и мешком</div>
+      <div class="clue"><span class="clue-number">4.</span> Весёлая детская "стрелялка", создающая хлопок</div>
+      <div class="clue"><span class="clue-number">6.</span> Торжественное событие, отмечаемое с ёлкой и подарками</div>
+      <div class="clue"><span class="clue-number">8.</span> Новогоднее дерево с игрушками</div>
+      <div class="clue"><span class="clue-number">9.</span> То, что падает зимой и из чего лепят снеговиков</div>
+      <div class="clue"><span class="clue-number">11.</span> Взрывные огненные шоу в небе в полночь</div>
+      <div class="clue"><span class="clue-number">13.</span> Волшебная помощница Деда Мороза</div>
+
+      <h2>По вертикали:</h2>
+      <div class="clue"><span class="clue-number">2.</span> Звон часов в полночь, возвещающий Новый год</div>
+      <div class="clue"><span class="clue-number">3.</span> Украшение для ёлки или комнаты из лампочек</div>
+      <div class="clue"><span class="clue-number">5.</span> То, что Дед Мороз кладёт под ёлку</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="checkAnswers()">Проверить</button>
 
